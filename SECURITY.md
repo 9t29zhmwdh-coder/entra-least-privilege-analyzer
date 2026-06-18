@@ -12,7 +12,7 @@ To report a security vulnerability, please open a GitHub issue with the label `s
 
 Do not include tenant IDs, credentials, or personal data in the report.
 
-We will acknowledge receipt within 72 hours and aim to provide a fix or mitigation within 14 days for confirmed vulnerabilities.
+I will acknowledge receipt within 72 hours and aim to provide a fix or mitigation within 14 days for confirmed vulnerabilities.
 
 ## Security Design Principles
 
