@@ -1,0 +1,7 @@
+/target
+.env
+*.json.local
+reports/*.json
+reports/*.md
+!reports/sample_report.json
+!reports/sample_report.md

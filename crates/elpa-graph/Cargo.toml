@@ -1,0 +1,17 @@
+[package]
+name = "elpa-graph"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+
+[dependencies]
+elpa-core = { path = "../elpa-core" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tokio = { workspace = true }
+reqwest = { workspace = true }
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+chrono = { workspace = true }
+tracing = { workspace = true }

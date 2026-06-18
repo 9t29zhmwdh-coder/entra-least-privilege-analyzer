@@ -1,0 +1,47 @@
+{
+  "tenant_id": "contoso.onmicrosoft.com",
+  "analyzed_at": "2026-06-18T10:00:00Z",
+  "user_count": 142,
+  "assignment_count": 38,
+  "scores": [
+    {
+      "user_id": "aaaaaaaa-0000-0000-0000-000000000001",
+      "user_principal_name": "globaladmin@contoso.com",
+      "score": 120,
+      "flags": ["GlobalAdmin", "PermanentHighPrivilege"]
+    },
+    {
+      "user_id": "aaaaaaaa-0000-0000-0000-000000000002",
+      "user_principal_name": "secops@contoso.com",
+      "score": 80,
+      "flags": ["PrivilegedRoleAdmin"]
+    }
+  ],
+  "gaps": [
+    {
+      "gap_type": "permanent_high_privilege",
+      "severity": "critical",
+      "title": "Permanent high-privilege role assignments without PIM",
+      "description": "2 account(s) hold high-privilege roles as permanent direct assignments.",
+      "affected_principals": ["globaladmin@contoso.com", "breakglass@contoso.com"],
+      "remediation": "Migrate permanent role assignments to PIM eligible assignments."
+    },
+    {
+      "gap_type": "pim_weak_settings",
+      "severity": "high",
+      "title": "PIM activation for 'Global Administrator' does not require MFA",
+      "description": "MFA is not enforced during PIM role activation.",
+      "affected_principals": ["Global Administrator"],
+      "remediation": "Enable MFA requirement in PIM role settings for this role."
+    }
+  ],
+  "summary": {
+    "critical_count": 1,
+    "high_count": 2,
+    "medium_count": 1,
+    "low_count": 1,
+    "overprivileged_accounts": 1,
+    "permanent_high_privilege_accounts": 2,
+    "roles_without_pim": 0
+  }
+}
