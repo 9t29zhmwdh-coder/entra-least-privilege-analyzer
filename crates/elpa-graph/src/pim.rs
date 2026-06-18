@@ -123,11 +123,11 @@ pub async fn get_pim_role_settings(client: &GraphClient) -> Result<Vec<PimRoleSe
 }
 
 fn extract_mfa_requirement(rules: Option<&Vec<serde_json::Value>>) -> bool {
-    rules.map_or(false, |r| {
+    rules.is_some_and(|r| {
         r.iter().any(|rule| {
             rule.get("@odata.type")
                 .and_then(|t| t.as_str())
-                .map_or(false, |t| t.contains("AuthenticationContext"))
+                .is_some_and(|t| t.contains("AuthenticationContext"))
                 && rule
                     .get("isEnabled")
                     .and_then(|v| v.as_bool())
@@ -137,11 +137,11 @@ fn extract_mfa_requirement(rules: Option<&Vec<serde_json::Value>>) -> bool {
 }
 
 fn extract_justification_requirement(rules: Option<&Vec<serde_json::Value>>) -> bool {
-    rules.map_or(false, |r| {
+    rules.is_some_and(|r| {
         r.iter().any(|rule| {
             rule.get("@odata.type")
                 .and_then(|t| t.as_str())
-                .map_or(false, |t| t.contains("Justification"))
+                .is_some_and(|t| t.contains("Justification"))
                 && rule
                     .get("isRequired")
                     .and_then(|v| v.as_bool())
@@ -157,7 +157,7 @@ fn extract_max_duration_hours(rules: Option<&Vec<serde_json::Value>>) -> u32 {
                 .find(|rule| {
                     rule.get("@odata.type")
                         .and_then(|t| t.as_str())
-                        .map_or(false, |t| t.contains("MaximumGrantPeriod"))
+                        .is_some_and(|t| t.contains("MaximumGrantPeriod"))
                 })
                 .and_then(|rule| rule.get("maximumDuration"))
                 .and_then(|v| v.as_str())
