@@ -26,5 +26,7 @@
 ## v1.0.0
 
 - Stable API for integration into CI/CD pipelines
-- Benchmark against Microsoft Cloud Security Baseline (MCSB)
+- Full benchmark against Microsoft Cloud Security Benchmark (MCSB) identity controls
+- Microsoft Defender for Identity integration (correlate privilege gaps with threat detections)
+- Microsoft Secure Score export (map findings to Secure Score improvement actions)
 - Entra External ID support

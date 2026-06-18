@@ -10,6 +10,8 @@
 
 Der Entra Least-Privilege Analyzer verbindet sich per Anwendungsberechtigungen mit der Microsoft Graph API und erstellt einen strukturierten Berechtigungsbericht. Vollständig read-only, keine Daten verlassen das lokale Gerät.
 
+Konzipiert fuer Zero-Trust-Umgebungen. Ausgerichtet an den Identity-Controls des [Microsoft Cloud Security Benchmark (MCSB)](https://learn.microsoft.com/de-de/security/benchmark/azure/overview) und den Microsoft Secure Score Empfehlungen.
+
 ![Rust](https://img.shields.io/badge/Rust-1.78+-orange?logo=rust)
 ![Microsoft Entra ID](https://img.shields.io/badge/Microsoft%20Entra%20ID-blue?logo=microsoftazure)
 ![Plattform](https://img.shields.io/badge/Plattform-Windows%20%7C%20Linux-lightgrey?logo=windows)

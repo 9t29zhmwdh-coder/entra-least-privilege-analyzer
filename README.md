@@ -10,6 +10,8 @@
 
 Entra Least-Privilege Analyzer connects to Microsoft Graph API using application credentials and produces a structured privilege report. Entirely read-only, no data leaves your machine.
 
+Built for Zero Trust environments. Aligned with the [Microsoft Cloud Security Benchmark (MCSB)](https://learn.microsoft.com/en-us/security/benchmark/azure/overview) identity controls and Microsoft Secure Score recommendations.
+
 ![Rust](https://img.shields.io/badge/Rust-1.78+-orange?logo=rust)
 ![Microsoft Entra ID](https://img.shields.io/badge/Microsoft%20Entra%20ID-blue?logo=microsoftazure)
 ![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux-lightgrey?logo=windows)
