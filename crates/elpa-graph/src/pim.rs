@@ -31,6 +31,7 @@ struct PimRoleRef {
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 struct GraphRoleManagementPolicyAssignment {
+    #[allow(dead_code)]
     id: String,
     role_definition_id: Option<String>,
     role_definition: Option<PimRoleRef>,
@@ -40,6 +41,7 @@ struct GraphRoleManagementPolicyAssignment {
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 struct GraphRoleManagementPolicy {
+    #[allow(dead_code)]
     id: String,
     rules: Option<Vec<serde_json::Value>>,
 }
@@ -93,7 +95,7 @@ pub async fn get_pim_role_settings(client: &GraphClient) -> Result<Vec<PimRoleSe
 
     let settings = assignments
         .into_iter()
-        .filter_map(|a| {
+        .map(|a| {
             let role_name = a
                 .role_definition
                 .as_ref()
@@ -106,14 +108,14 @@ pub async fn get_pim_role_settings(client: &GraphClient) -> Result<Vec<PimRoleSe
             let requires_justification = extract_justification_requirement(rules);
             let max_hours = extract_max_duration_hours(rules);
 
-            Some(PimRoleSettings {
+            PimRoleSettings {
                 role_id,
                 role_name,
                 requires_mfa,
                 requires_approval: false,
                 max_activation_duration_hours: max_hours,
                 requires_justification,
-            })
+            }
         })
         .collect();
 

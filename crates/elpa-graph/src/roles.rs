@@ -7,8 +7,10 @@ use elpa_core::models::{AssignmentType, RoleAssignment};
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 struct GraphRoleDefinition {
+    #[allow(dead_code)]
     id: String,
     display_name: Option<String>,
+    #[allow(dead_code)]
     is_built_in: Option<bool>,
 }
 
@@ -24,6 +26,7 @@ struct GraphPrincipal {
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 struct GraphRoleAssignment {
+    #[allow(dead_code)]
     id: String,
     role_definition_id: String,
     principal_id: Option<String>,

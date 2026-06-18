@@ -101,7 +101,6 @@ impl GraphClient {
 
     pub async fn get_all_pages<T: DeserializeOwned>(&self, path: &str) -> Result<Vec<T>> {
         let mut all = vec![];
-        let mut next: Option<String> = None;
         let first_url = format!("{}{}", GRAPH_BASE, path);
         let mut url = first_url;
 
@@ -109,13 +108,9 @@ impl GraphClient {
             let page: GraphPage<T> = self.get(&url).await?;
             all.extend(page.value);
             match page.next_link {
-                Some(link) => {
-                    next = Some(link.clone());
-                    url = link;
-                }
+                Some(link) => url = link,
                 None => break,
             }
-            let _ = next;
         }
         Ok(all)
     }
