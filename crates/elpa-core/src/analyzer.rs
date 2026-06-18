@@ -86,7 +86,7 @@ pub fn compute_privilege_scores(
     }
 
     let mut result: Vec<PrivilegeScore> = scores.into_values().collect();
-    result.sort_by(|a, b| b.score.cmp(&a.score));
+    result.sort_by_key(|b| std::cmp::Reverse(b.score));
     result
 }
 
