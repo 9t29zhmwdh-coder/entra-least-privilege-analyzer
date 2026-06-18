@@ -8,7 +8,7 @@
 
 **Read-only Rust CLI zur Analyse von Entra ID Berechtigungskonfigurationen, Erkennung überprivilegierter Accounts, Rollen-Overlap und PIM-Lücken.**
 
-Der Entra Least-Privilege Analyzer verbindet sich per Anwendungsberechtigungen mit der Microsoft Graph API und erstellt einen strukturierten Berechtigungsbericht — vollständig read-only, keine Daten verlassen das lokale Gerät.
+Der Entra Least-Privilege Analyzer verbindet sich per Anwendungsberechtigungen mit der Microsoft Graph API und erstellt einen strukturierten Berechtigungsbericht. Vollständig read-only, keine Daten verlassen das lokale Gerät.
 
 ![Rust](https://img.shields.io/badge/Rust-1.78+-orange?logo=rust)
 ![Microsoft Entra ID](https://img.shields.io/badge/Microsoft%20Entra%20ID-blue?logo=microsoftazure)
@@ -95,7 +95,7 @@ ENTRA_CLIENT_ID=deine-client-id
 ENTRA_CLIENT_SECRET=dein-clientschluessel
 ```
 
-Die `.env`-Datei ist in `.gitignore` aufgeführt — Zugangsdaten werden nie committet.
+Die `.env`-Datei ist in `.gitignore` aufgeführt. Zugangsdaten werden nie committet.
 
 ---
 
