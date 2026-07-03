@@ -153,4 +153,4 @@ See `reports/sample_report.md` for a full annotated example.
 
 ---
 
-**Author:** [Rafael Yilmaz](https://github.com/9t29zhmwdh-coder) · **Status:** Active · v0.1.0 · **License:** MIT
+**Author:** [Rafael Yilmaz](https://github.com/9t29zhmwdh-coder) · **Status:** Active · v0.2.0 · **License:** MIT
