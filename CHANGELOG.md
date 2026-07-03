@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.2.0] — 2026-07-03
+
+### Added
+
+- Bring-your-own-token mode: `ENTRA_ACCESS_TOKEN` (+ `ENTRA_TENANT_ID`) skips
+  the client-credentials flow for callers that already hold a delegated
+  Microsoft Graph token (e.g. admin portals). Token is used as-is, never
+  refreshed — intended for one-shot runs. Existing flow unchanged.
+
+
 ## [0.1.0] — 2026-06-18
 
 ### Added
