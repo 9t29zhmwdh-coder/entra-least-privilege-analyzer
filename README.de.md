@@ -131,4 +131,4 @@ Einzelläufe, bei denen der Aufrufer die Token-Lebensdauer verwaltet.
 
 ---
 
-**Autor:** [Rafael Yilmaz](https://github.com/9t29zhmwdh-coder) · **Status:** Active · ![version](https://img.shields.io/github/v/release/9t29zhmwdh-coder/entra-least-privilege-analyzer?label=\&color=6b7280\&style=flat-square) · **Lizenz:** MIT
+**Autor:** [Rafael Yilmaz](https://github.com/9t29zhmwdh-coder) · **Status:** Active · ![version](https://img.shields.io/github/v/release/9t29zhmwdh-coder/entra-least-privilege-analyzer?color=6b7280&style=flat-square) · **Lizenz:** MIT
