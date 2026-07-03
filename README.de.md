@@ -94,6 +94,22 @@ ENTRA_CLIENT_SECRET=dein-clientschluessel
 
 Die `.env`-Datei ist in `.gitignore` aufgeführt. Zugangsdaten werden nie committet.
 
+### Alternative: Eigenen Token mitbringen
+
+Wer bereits einen gültigen Microsoft-Graph-Access-Token besitzt (z.B. aus
+einem Admin-Portal mit delegierter Anmeldung), kann den Client-Credentials-
+Flow überspringen:
+
+```env
+ENTRA_TENANT_ID=deine-tenant-id
+ENTRA_ACCESS_TOKEN=eyJ0eXAi...
+```
+
+Der Token wird unverändert genutzt und nicht erneuert — gedacht für
+Einzelläufe, bei denen der Aufrufer die Token-Lebensdauer verwaltet.
+`ENTRA_CLIENT_ID`/`ENTRA_CLIENT_SECRET` sind in diesem Modus nicht nötig.
+
+
 ---
 
 ## Schweregrade der Befunde

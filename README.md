@@ -94,6 +94,21 @@ ENTRA_CLIENT_SECRET=your-client-secret
 
 The `.env` file is listed in `.gitignore`. Credentials are never committed.
 
+### Alternative: Bring your own token
+
+If you already hold a valid Microsoft Graph access token (e.g. issued to an
+admin portal via delegated auth), you can skip the client-credentials flow:
+
+```env
+ENTRA_TENANT_ID=your-tenant-id
+ENTRA_ACCESS_TOKEN=eyJ0eXAi...
+```
+
+The token is used as-is and never refreshed — suitable for one-shot runs
+where the caller manages token lifetime. `ENTRA_CLIENT_ID`/`ENTRA_CLIENT_SECRET`
+are not required in this mode.
+
+
 ---
 
 ## Findings Severity

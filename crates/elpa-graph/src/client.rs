@@ -33,6 +33,23 @@ impl GraphClient {
     pub fn from_env() -> Result<Self> {
         let tenant_id = std::env::var("ENTRA_TENANT_ID")
             .map_err(|_| anyhow!("ENTRA_TENANT_ID not set"))?;
+
+        // Bring-your-own-token: ENTRA_ACCESS_TOKEN skips the client-credentials
+        // flow entirely. The token is used as-is and never refreshed — intended
+        // for one-shot runs where the caller manages token lifetime (e.g. an
+        // admin portal passing its delegated Graph token).
+        if let Ok(token) = std::env::var("ENTRA_ACCESS_TOKEN") {
+            if !token.trim().is_empty() {
+                return Ok(Self {
+                    tenant_id,
+                    client_id: String::new(),
+                    client_secret: String::new(),
+                    http: reqwest::Client::new(),
+                    token: Arc::new(RwLock::new(Some(token))),
+                });
+            }
+        }
+
         let client_id = std::env::var("ENTRA_CLIENT_ID")
             .map_err(|_| anyhow!("ENTRA_CLIENT_ID not set"))?;
         let client_secret = std::env::var("ENTRA_CLIENT_SECRET")
