@@ -131,4 +131,4 @@ Einzelläufe, bei denen der Aufrufer die Token-Lebensdauer verwaltet.
 
 ---
 
-**Autor:** [Rafael Yilmaz](https://github.com/9t29zhmwdh-coder) · **Status:** Active · v0.1.0 · **Lizenz:** MIT
+**Autor:** [Rafael Yilmaz](https://github.com/9t29zhmwdh-coder) · **Status:** Active · v0.2.0 · **Lizenz:** MIT
