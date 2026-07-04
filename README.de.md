@@ -105,7 +105,7 @@ ENTRA_TENANT_ID=deine-tenant-id
 ENTRA_ACCESS_TOKEN=eyJ0eXAi...
 ```
 
-Der Token wird unverändert genutzt und nicht erneuert — gedacht für
+Der Token wird unverändert genutzt und nicht erneuert, gedacht für
 Einzelläufe, bei denen der Aufrufer die Token-Lebensdauer verwaltet.
 `ENTRA_CLIENT_ID`/`ENTRA_CLIENT_SECRET` sind in diesem Modus nicht nötig.
 
