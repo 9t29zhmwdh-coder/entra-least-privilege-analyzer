@@ -14,7 +14,13 @@ Konzipiert für Zero-Trust-Umgebungen. Ausgerichtet an den Identity-Controls des
 
 [![CI](https://github.com/9t29zhmwdh-coder/entra-least-privilege-analyzer/actions/workflows/ci.yml/badge.svg)](https://github.com/9t29zhmwdh-coder/entra-least-privilege-analyzer/actions) ![Microsoft | Entra ID](https://img.shields.io/badge/Microsoft-Entra_ID-0078d4?logo=microsoftazure&logoColor=white) ![Platform](https://img.shields.io/badge/Platform-Windows_%7C_Ubuntu-lightgrey) ![Rust](https://img.shields.io/badge/Rust-CE422B?logo=rust&logoColor=white) ![AI | Claude Code](https://img.shields.io/badge/AI-Claude_Code-black?logo=anthropic&logoColor=white) ![AI | Copilot](https://img.shields.io/badge/AI-Copilot-black?logo=github&logoColor=white) [![Release](https://img.shields.io/github/v/release/9t29zhmwdh-coder/entra-least-privilege-analyzer?color=3F8E7E)](https://github.com/9t29zhmwdh-coder/entra-least-privilege-analyzer/releases) [![License](https://img.shields.io/github/license/9t29zhmwdh-coder/entra-least-privilege-analyzer?color=lightgrey)](LICENSE)
 
+> **So läuft das:** Das ist ein Kommandozeilen-Tool, keine Desktop-App und kein Server. `elpa` läuft pro Befehl einmal durch und beendet sich; es gibt keinen Installer und keinen Hintergrundprozess. Mit `elpa demo` siehst du es gegen einen eingebauten synthetischen Mandanten laufen, ganz ohne Entra-ID-Zugangsdaten.
+
+![entra-least-privilege-analyzer](docs/screenshot.png)
+
 ---
+
+**In der Praxis:** Du bekommst eine CLI, die sich read-only mit deinem Mandanten verbindet und eine priorisierte Liste an Berechtigungsrisiken (überprivilegierte Accounts, Rollen-Overlap, PIM-Lücken) direkt ins Terminal ausgibt, oder als JSON/Markdown für Tickets und Audits exportiert.
 
 ## Funktionen
 
@@ -61,11 +67,13 @@ Alle Berechtigungen sind **read-only**. Es werden keine Schreibberechtigungen be
 ```bash
 git clone https://github.com/9t29zhmwdh-coder/entra-least-privilege-analyzer
 cd entra-least-privilege-analyzer
-
-# .env erstellen und Zugangsdaten eintragen
-cp .env.example .env
-
 cargo build --release
+
+# Ohne Zugangsdaten testen, gegen einen eingebauten synthetischen Mandanten
+./target/release/elpa demo
+
+# .env erstellen und Zugangsdaten für einen echten Mandanten eintragen
+cp .env.example .env
 
 # Vollständige Analyse
 ./target/release/elpa analyze
@@ -79,6 +87,12 @@ cargo build --release
 # Export als JSON
 ./target/release/elpa export --format json --output bericht.json
 ```
+
+---
+
+## Deinstallation / Datenbereinigung
+
+Lösche das `target/` Build-Verzeichnis, deine lokale `.env`-Datei (enthält deinen Client-Secret) und exportierte Report-Dateien (`bericht.md`, `bericht.json`). Das Tool ist read-only gegenüber Entra ID und schreibt nie etwas in deinen Mandanten zurück.
 
 ---
 
