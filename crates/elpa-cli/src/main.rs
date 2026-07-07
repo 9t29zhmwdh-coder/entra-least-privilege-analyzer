@@ -10,7 +10,7 @@ use tracing::info;
     name = "elpa",
     version = "0.1.0",
     author = "RayStudio",
-    about = "Entra Least-Privilege Analyzer — read-only Entra ID privilege analysis"
+    about = "Entra Least-Privilege Analyzer: read-only Entra ID privilege analysis"
 )]
 struct Cli {
     #[command(subcommand)]
@@ -36,6 +36,8 @@ enum Command {
         #[arg(long, short)]
         output: Option<String>,
     },
+    /// Run the analysis against a built-in synthetic tenant, no Entra ID credentials needed
+    Demo,
 }
 
 #[derive(Tabled)]
@@ -69,6 +71,12 @@ async fn main() -> Result<()> {
         .init();
 
     let cli = Cli::parse();
+
+    if matches!(cli.command, Command::Demo) {
+        run_demo();
+        return Ok(());
+    }
+
     let tenant_id = std::env::var("ENTRA_TENANT_ID").unwrap_or_else(|_| "unknown".to_string());
     let client = GraphClient::from_env()?;
 
@@ -174,9 +182,69 @@ async fn main() -> Result<()> {
                 None => print!("{}", content),
             }
         }
+
+        Command::Demo => unreachable!("handled before GraphClient is created"),
     }
 
     Ok(())
+}
+
+fn run_demo() {
+    use elpa_core::models::{AssignmentType, PimRoleSettings, RoleAssignment, User};
+
+    let users = vec![
+        User { id: "u1".into(), display_name: "Admin Contoso".into(), user_principal_name: "admin@contoso.com".into(), account_enabled: true },
+        User { id: "u2".into(), display_name: "Ops Contoso".into(), user_principal_name: "ops@contoso.com".into(), account_enabled: true },
+    ];
+    let assignments = vec![
+        RoleAssignment { user_id: "u1".into(), user_principal_name: "admin@contoso.com".into(), role_id: "role-global-admin".into(), role_name: "Global Administrator".into(), assignment_type: AssignmentType::Direct, is_permanent: true, expires_at: None },
+        RoleAssignment { user_id: "u2".into(), user_principal_name: "ops@contoso.com".into(), role_id: "role-user-admin".into(), role_name: "User Administrator".into(), assignment_type: AssignmentType::Direct, is_permanent: false, expires_at: None },
+        RoleAssignment { user_id: "u2".into(), user_principal_name: "ops@contoso.com".into(), role_id: "role-exchange-admin".into(), role_name: "Exchange Administrator".into(), assignment_type: AssignmentType::Direct, is_permanent: false, expires_at: None },
+    ];
+    let pim_settings = vec![PimRoleSettings {
+        role_id: "role-global-admin".into(),
+        role_name: "Global Administrator".into(),
+        requires_mfa: false,
+        requires_approval: false,
+        max_activation_duration_hours: 8,
+        requires_justification: false,
+    }];
+
+    let result = analyzer::build_analysis_result(
+        "contoso-demo-tenant".to_string(),
+        &users,
+        &assignments,
+        &pim_settings,
+    );
+
+    println!("\n=== Entra Least-Privilege Analyzer (demo, synthetic data) ===\n");
+    println!(
+        "Users: {}  Assignments: {}  Findings: {}\n",
+        result.user_count,
+        result.assignment_count,
+        result.gaps.len()
+    );
+
+    if !result.gaps.is_empty() {
+        let gap_rows: Vec<GapRow> = result
+            .gaps
+            .iter()
+            .map(|g| GapRow {
+                severity: g.severity.to_string(),
+                title: truncate(&g.title, 60),
+                affected: g.affected_principals.len(),
+            })
+            .collect();
+        println!("Findings:\n{}\n", Table::new(gap_rows));
+    }
+
+    println!(
+        "Summary: {} Critical, {} High, {} Medium, {} Low",
+        result.summary.critical_count,
+        result.summary.high_count,
+        result.summary.medium_count,
+        result.summary.low_count
+    );
 }
 
 async fn fetch_all(

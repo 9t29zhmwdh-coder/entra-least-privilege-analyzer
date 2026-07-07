@@ -14,7 +14,13 @@ Built for Zero Trust environments. Aligned with the [Microsoft Cloud Security Be
 
 [![CI](https://github.com/9t29zhmwdh-coder/entra-least-privilege-analyzer/actions/workflows/ci.yml/badge.svg)](https://github.com/9t29zhmwdh-coder/entra-least-privilege-analyzer/actions) ![Microsoft | Entra ID](https://img.shields.io/badge/Microsoft-Entra_ID-0078d4?logo=microsoftazure&logoColor=white) ![Platform](https://img.shields.io/badge/Platform-Windows_%7C_Ubuntu-lightgrey) ![Rust](https://img.shields.io/badge/Rust-CE422B?logo=rust&logoColor=white) ![AI | Claude Code](https://img.shields.io/badge/AI-Claude_Code-black?logo=anthropic&logoColor=white) ![AI | Copilot](https://img.shields.io/badge/AI-Copilot-black?logo=github&logoColor=white) [![Release](https://img.shields.io/github/v/release/9t29zhmwdh-coder/entra-least-privilege-analyzer?color=3F8E7E)](https://github.com/9t29zhmwdh-coder/entra-least-privilege-analyzer/releases) [![License](https://img.shields.io/github/license/9t29zhmwdh-coder/entra-least-privilege-analyzer?color=lightgrey)](LICENSE)
 
+> **How it runs:** This is a command-line tool, not a desktop app and not a server. `elpa` runs once per command and exits; there is no installer and no background process. Run `elpa demo` to see it work against a built-in synthetic tenant, no Entra ID credentials needed.
+
+![entra-least-privilege-analyzer](docs/screenshot.png)
+
 ---
+
+**In practice:** you get a CLI that connects to your tenant read-only and prints a prioritized list of privilege risks (over-privileged accounts, role overlap, PIM gaps) straight to your terminal, or exports them as JSON/Markdown for tickets and audits.
 
 ## Features
 
@@ -61,11 +67,13 @@ All permissions are **read-only**. No write permissions are required or used.
 ```bash
 git clone https://github.com/9t29zhmwdh-coder/entra-least-privilege-analyzer
 cd entra-least-privilege-analyzer
-
-# Copy and fill in your credentials
-cp .env.example .env
-
 cargo build --release
+
+# Try it without any credentials, against a built-in synthetic tenant
+./target/release/elpa demo
+
+# Copy and fill in your credentials for a real tenant
+cp .env.example .env
 
 # Full analysis
 ./target/release/elpa analyze
@@ -79,6 +87,12 @@ cargo build --release
 # Export as JSON
 ./target/release/elpa export --format json --output report.json
 ```
+
+---
+
+## Uninstall / Cleanup
+
+Delete the `target/` build directory, your local `.env` file (contains your client secret), and any exported report files (`report.md`, `report.json`). The tool is read-only against Entra ID and never writes anything back to your tenant.
 
 ---
 
