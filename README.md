@@ -62,6 +62,16 @@ All permissions are **read-only**. No write permissions are required or used.
 
 ---
 
+## Requirements
+
+- Rust 1.78+
+- Entra ID tenant with an app registration
+- Network access to `login.microsoftonline.com` and `graph.microsoft.com`
+
+> 🌱 New here? → [Step-by-step guide for beginners](GETTING_STARTED.md)
+
+---
+
 ## Quick Start
 
 ```bash
@@ -156,14 +166,6 @@ Findings:
 ```
 
 See `reports/sample_report.md` for a full annotated example.
-
----
-
-## Requirements
-
-- Rust 1.78+
-- Entra ID tenant with an app registration
-- Network access to `login.microsoftonline.com` and `graph.microsoft.com`
 
 ---
 
