@@ -22,6 +22,12 @@ Built for Zero Trust environments. Aligned with the [Microsoft Cloud Security Be
 
 **In practice:** you get a CLI that connects to your tenant read-only and prints a prioritized list of privilege risks (over-privileged accounts, role overlap, PIM gaps) straight to your terminal, or exports them as JSON/Markdown for tickets and audits.
 
+---
+
+> 🌱 New here? → [Step-by-step guide for beginners](GETTING_STARTED.md)
+
+---
+
 ## Features
 
 | Capability | Description |
@@ -67,8 +73,6 @@ All permissions are **read-only**. No write permissions are required or used.
 - Rust 1.78+
 - Entra ID tenant with an app registration
 - Network access to `login.microsoftonline.com` and `graph.microsoft.com`
-
-> 🌱 New here? → [Step-by-step guide for beginners](GETTING_STARTED.md)
 
 ---
 
