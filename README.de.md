@@ -20,6 +20,10 @@ Konzipiert für Zero-Trust-Umgebungen. Ausgerichtet an den Identity-Controls des
 
 ---
 
+> 🌱 Neu hier? → [Schritt-für-Schritt-Anleitung für Einsteiger](GETTING_STARTED.md)
+
+---
+
 **In der Praxis:** Du bekommst eine CLI, die sich read-only mit deinem Mandanten verbindet und eine priorisierte Liste an Berechtigungsrisiken (überprivilegierte Accounts, Rollen-Overlap, PIM-Lücken) direkt ins Terminal ausgibt, oder als JSON/Markdown für Tickets und Audits exportiert.
 
 ## Funktionen
