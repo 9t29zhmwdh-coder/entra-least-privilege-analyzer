@@ -1,6 +1,13 @@
 # Changelog
 
-## [0.2.2] — 2026-07-10
+## [0.2.3] - 2026-07-10
+
+### Fixed
+
+- Removed em-dashes from README.md/README.de.md/CHANGELOG.md, replaced with colons or plain hyphens
+- Changed the language-switch link from a blockquote to plain text
+
+## [0.2.2] - 2026-07-10
 
 ### Changed
 
@@ -10,17 +17,17 @@
 
 - Added the "New here?" beginner guide callout to README.de.md (was missing)
 
-## [0.2.0] — 2026-07-03
+## [0.2.0] - 2026-07-03
 
 ### Added
 
 - Bring-your-own-token mode: `ENTRA_ACCESS_TOKEN` (+ `ENTRA_TENANT_ID`) skips
   the client-credentials flow for callers that already hold a delegated
   Microsoft Graph token (e.g. admin portals). Token is used as-is, never
-  refreshed — intended for one-shot runs. Existing flow unchanged.
+  refreshed: intended for one-shot runs. Existing flow unchanged.
 
 
-## [0.1.0] — 2026-06-18
+## [0.1.0] - 2026-06-18
 
 ### Added
 
