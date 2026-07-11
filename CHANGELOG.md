@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.4] - 2026-07-11
+
+### Fixed
+
+- Updated actions/checkout to its latest major version in CI, since GitHub is deprecating the Node.js 20 runtime and the previous version was being forced onto Node 24 and crashing during post-run cleanup.
+
 ## [0.2.3] - 2026-07-10
 
 ### Fixed
