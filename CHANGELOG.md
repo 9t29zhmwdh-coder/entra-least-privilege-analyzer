@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.7] - 2026-07-12
+
+### Fixed
+
+- Removed em-dashes/en-dashes across source comments, docs, and scripts (Swiss German orthography rule).
+
 ## [0.2.6] - 2026-07-12
 
 ### Added

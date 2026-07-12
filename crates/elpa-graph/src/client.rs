@@ -35,7 +35,7 @@ impl GraphClient {
             .map_err(|_| anyhow!("ENTRA_TENANT_ID not set"))?;
 
         // Bring-your-own-token: ENTRA_ACCESS_TOKEN skips the client-credentials
-        // flow entirely. The token is used as-is and never refreshed — intended
+        // flow entirely. The token is used as-is and never refreshed: intended
         // for one-shot runs where the caller manages token lifetime (e.g. an
         // admin portal passing its delegated Graph token).
         if let Ok(token) = std::env::var("ENTRA_ACCESS_TOKEN") {

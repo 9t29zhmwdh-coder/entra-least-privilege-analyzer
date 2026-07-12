@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-echo "Entra Least-Privilege Analyzer — Setup"
+echo "Entra Least-Privilege Analyzer: Setup"
 echo "======================================="
 echo ""
 echo "Prerequisites:"
@@ -12,7 +12,7 @@ echo ""
 
 if [ ! -f .env ]; then
     cp .env.example .env
-    echo "Created .env from .env.example — fill in your credentials."
+    echo "Created .env from .env.example. Fill in your credentials."
 else
     echo ".env already exists."
 fi
