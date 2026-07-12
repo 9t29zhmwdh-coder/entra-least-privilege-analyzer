@@ -22,4 +22,4 @@ What you expected to happen.
 - elpa version: [e.g. 0.1.0]
 
 **Additional context**
-Add any other context (sanitized — no tenant IDs, credentials, or user data).
+Add any other context (sanitized: no tenant IDs, credentials, or user data).

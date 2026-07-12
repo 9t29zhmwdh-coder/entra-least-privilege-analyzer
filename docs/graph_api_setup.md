@@ -27,15 +27,15 @@
 
 1. Go to **Certificates & secrets > New client secret**
 2. Set an expiry (recommend 6 months for security tools)
-3. Copy the **Value** immediately — it will not be shown again
+3. Copy the **Value** immediately. It will not be shown again
 
 ## Step 4: Note your credentials
 
 Find these values on the application overview page:
 
-- **Tenant ID** — shown as "Directory (tenant) ID"
-- **Client ID** — shown as "Application (client) ID"
-- **Client Secret** — the value you copied in Step 3
+- **Tenant ID**: shown as "Directory (tenant) ID"
+- **Client ID**: shown as "Application (client) ID"
+- **Client Secret**: the value you copied in Step 3
 
 ## Step 5: Configure the tool
 
