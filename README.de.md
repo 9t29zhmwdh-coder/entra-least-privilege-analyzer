@@ -66,6 +66,14 @@ Alle Berechtigungen sind **read-only**. Es werden keine Schreibberechtigungen be
 
 ---
 
+## Voraussetzungen
+
+- Rust 1.78+
+- Entra ID Mandant mit App-Registrierung
+- Netzwerkzugang zu `login.microsoftonline.com` und `graph.microsoft.com`
+
+---
+
 ## Schnellstart
 
 ```bash
@@ -141,11 +149,26 @@ Einzelläufe, bei denen der Aufrufer die Token-Lebensdauer verwaltet.
 
 ---
 
-## Voraussetzungen
+## Beispielausgabe
 
-- Rust 1.78+
-- Entra ID Mandant mit App-Registrierung
-- Netzwerkzugang zu `login.microsoftonline.com` und `graph.microsoft.com`
+```
+=== Entra Least-Privilege Analyzer ===
+
+Users: 142  Assignments: 38  Findings: 5
+
+Findings:
++----------+------------------------------------------------------+-----------+
+| Severity | Title                                                | Affected  |
++----------+------------------------------------------------------+-----------+
+| CRITICAL | Permanent high-privilege roles without PIM           | 2         |
+| HIGH     | Over-privileged account: admin@contoso.com           | 1         |
+| HIGH     | PIM activation for 'Global Admin' lacks MFA          | 1         |
+| MEDIUM   | Role overlap detected for ops@contoso.com            | 1         |
+| LOW      | PIM activation missing justification requirement     | 3         |
++----------+------------------------------------------------------+-----------+
+```
+
+Siehe `reports/sample_report.md` für ein vollständig annotiertes Beispiel.
 
 ---
 

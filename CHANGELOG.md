@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.8] - 2026-07-13
+
+### Fixed
+
+- README.de.md section order now matches README.md (Voraussetzungen/Requirements moved from the end to before Quick Start).
+- Added the missing "Beispielausgabe" (Sample Output) section to README.de.md, which README.md has.
+
 ## [0.2.7] - 2026-07-12
 
 ### Fixed
