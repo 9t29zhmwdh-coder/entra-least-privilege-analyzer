@@ -142,3 +142,92 @@ impl AnalysisSummary {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn gap(gap_type: GapType, severity: Severity) -> SecurityGap {
+        SecurityGap {
+            gap_type,
+            severity,
+            title: "t".to_string(),
+            description: "d".to_string(),
+            affected_principals: vec![],
+            remediation: "r".to_string(),
+        }
+    }
+
+    fn score(value: u32, flags: Vec<PrivilegeFlag>) -> PrivilegeScore {
+        PrivilegeScore {
+            user_id: "u".to_string(),
+            user_principal_name: "u@contoso.com".to_string(),
+            score: value,
+            flags,
+        }
+    }
+
+    #[test]
+    fn from_gaps_counts_severities_independently() {
+        let gaps = vec![
+            gap(GapType::OverprivilegedAccount, Severity::Critical),
+            gap(GapType::RoleOverlap, Severity::High),
+            gap(GapType::RoleOverlap, Severity::High),
+            gap(GapType::PimNotConfigured, Severity::Medium),
+            gap(GapType::PimWeakSettings, Severity::Low),
+        ];
+
+        let summary = AnalysisSummary::from_gaps(&gaps, &[]);
+
+        assert_eq!(summary.critical_count, 1);
+        assert_eq!(summary.high_count, 2);
+        assert_eq!(summary.medium_count, 1);
+        assert_eq!(summary.low_count, 1);
+    }
+
+    #[test]
+    fn from_gaps_counts_overprivileged_accounts_at_the_100_threshold() {
+        let scores = vec![
+            score(100, vec![]),
+            score(99, vec![]),
+            score(150, vec![]),
+        ];
+
+        let summary = AnalysisSummary::from_gaps(&[], &scores);
+
+        assert_eq!(summary.overprivileged_accounts, 2);
+    }
+
+    #[test]
+    fn from_gaps_counts_permanent_high_privilege_by_flag() {
+        let scores = vec![
+            score(10, vec![PrivilegeFlag::PermanentHighPrivilege]),
+            score(10, vec![PrivilegeFlag::GlobalAdmin]),
+        ];
+
+        let summary = AnalysisSummary::from_gaps(&[], &scores);
+
+        assert_eq!(summary.permanent_high_privilege_accounts, 1);
+    }
+
+    #[test]
+    fn from_gaps_counts_roles_without_pim_by_gap_type_only() {
+        let gaps = vec![
+            gap(GapType::PimNotConfigured, Severity::High),
+            gap(GapType::PimWeakSettings, Severity::High),
+        ];
+
+        let summary = AnalysisSummary::from_gaps(&gaps, &[]);
+
+        assert_eq!(summary.roles_without_pim, 1);
+    }
+
+    #[test]
+    fn from_gaps_on_empty_input_is_all_zero() {
+        let summary = AnalysisSummary::from_gaps(&[], &[]);
+
+        assert_eq!(summary.critical_count, 0);
+        assert_eq!(summary.overprivileged_accounts, 0);
+        assert_eq!(summary.roles_without_pim, 0);
+    }
+}

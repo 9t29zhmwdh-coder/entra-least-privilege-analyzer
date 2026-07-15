@@ -38,6 +38,9 @@ Assessed 2026-07-11 as a Dual-Licensing candidate (Community MIT + Commercial/En
 - [ ] No multi-tenant support yet: MSPs and consultancies auditing multiple customer tenants are a natural Commercial-tier audience
 - [ ] No stable API for CI/CD pipeline integration yet (v1.0.0 item above): a Commercial tier's core value here is usually turnkey pipeline gating, not a one-off CLI run
 - [ ] Microsoft Secure Score export and Defender for Identity integration are still only roadmap entries, not implemented
-- [ ] No server or API component to gate a Commercial tier against: today this is a pure local CLI with no persistence layer
+
+**Update (2026-07-15):** the "no server or API component" blocker below was reassessed against the two dual-licensing companion repos already shipped in this portfolio (`azure-policy-drift-detector-enterprise`, `entra-access-graph-engine-enterprise`): neither has a server, and a license-gated CLI binary consuming this repo's own output (or, per `elpa-graph`'s existing pinned-tag dependency pattern, linking the public crates directly) is a complete, proven Enterprise-gate pattern. A server/API component is not actually required. The three blockers above remain real and open; recommended build order once picked back up: multi-tenant scanning first (zero new Graph endpoints, pure reuse of `elpa-core`/`elpa-graph`), CI/CD pipeline gating second (pure logic, no new Graph calls), Secure Score/Defender for Identity last (needs new, less-documented Graph Security API surface, highest effort).
+
+~~No server or API component to gate a Commercial tier against: today this is a pure local CLI with no persistence layer~~ superseded by the update above.
 
 Once multi-tenant support and the Secure Score/Defender for Identity integrations (v1.0.0) land, revisit: candidate Enterprise-only features would be multi-tenant scanning, Secure Score/Defender export, and CI/CD pipeline gating, with the core scoring, overlap-detection and PIM-audit engine staying Community/MIT.

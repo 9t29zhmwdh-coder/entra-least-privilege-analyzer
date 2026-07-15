@@ -8,7 +8,7 @@ use tracing::info;
 #[derive(Parser)]
 #[command(
     name = "elpa",
-    version = "0.1.0",
+    version,
     author = "RayStudio",
     about = "Entra Least-Privilege Analyzer: read-only Entra ID privilege analysis"
 )]
