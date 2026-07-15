@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.3.0] - 2026-07-15
+
+### Added
+
+- Test coverage for `elpa-graph` (client token acquisition/caching, pagination, error handling, and all three Graph-consuming modules `roles`/`pim`/`users`), which previously had zero tests, using `wiremock` against hand-built fixture JSON matching the documented Graph response shapes. No live Entra ID tenant is required to run these.
+- Test coverage for `elpa-core::report` and `AnalysisSummary::from_gaps`, previously untested.
+- `GraphClient::new()`/`GraphClient::from_token()` constructors alongside the existing `from_env()`, and `with_graph_base()`/`with_token_url()` to override the Graph API base URL and OAuth token endpoint (useful for national cloud variants, and what makes the new tests possible without a real tenant).
+- CLI smoke tests (`elpa-cli/tests/demo.rs`) covering the offline `demo` subcommand, `--version`, and the clean-failure path when no Entra ID credentials are configured.
+
+### Fixed
+
+- `elpa --version` was hardcoded to `"0.1.0"` in the `clap` command definition regardless of the actual crate version; now reads `CARGO_PKG_VERSION` like the rest of the workspace.
+
 ## [0.2.8] - 2026-07-13
 
 ### Fixed

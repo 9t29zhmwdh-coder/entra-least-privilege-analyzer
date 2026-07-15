@@ -111,3 +111,105 @@ pub fn to_sarif_stub(result: &AnalysisResult) -> String {
 
     serde_json::to_string_pretty(&sarif).unwrap_or_default()
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::models::{AnalysisSummary, GapType, PrivilegeFlag, PrivilegeScore, SecurityGap};
+    use chrono::{TimeZone, Utc};
+
+    fn sample_gap() -> SecurityGap {
+        SecurityGap {
+            gap_type: GapType::OverprivilegedAccount,
+            severity: Severity::Critical,
+            title: "Over-privileged account".to_string(),
+            description: "desc".to_string(),
+            affected_principals: vec!["alice@contoso.com".to_string()],
+            remediation: "remediate it".to_string(),
+        }
+    }
+
+    fn sample_result(gaps: Vec<SecurityGap>) -> AnalysisResult {
+        AnalysisResult {
+            tenant_id: "tenant-1".to_string(),
+            analyzed_at: Utc.with_ymd_and_hms(2026, 7, 15, 12, 0, 0).unwrap(),
+            user_count: 5,
+            assignment_count: 3,
+            scores: vec![PrivilegeScore {
+                user_id: "u1".to_string(),
+                user_principal_name: "alice@contoso.com".to_string(),
+                score: 150,
+                flags: vec![PrivilegeFlag::GlobalAdmin],
+            }],
+            summary: AnalysisSummary::from_gaps(&gaps, &[]),
+            gaps,
+        }
+    }
+
+    #[test]
+    fn to_json_round_trips_core_fields() {
+        let result = sample_result(vec![sample_gap()]);
+
+        let json = to_json(&result).unwrap();
+        let parsed: AnalysisResult = serde_json::from_str(&json).unwrap();
+
+        assert_eq!(parsed.tenant_id, "tenant-1");
+        assert_eq!(parsed.gaps.len(), 1);
+    }
+
+    #[test]
+    fn to_markdown_includes_gap_and_score_details() {
+        let result = sample_result(vec![sample_gap()]);
+
+        let md = to_markdown(&result);
+
+        assert!(md.contains("tenant-1"));
+        assert!(md.contains("Over-privileged account"));
+        assert!(md.contains("alice@contoso.com"));
+        assert!(md.contains("| Critical | 1 |"));
+    }
+
+    #[test]
+    fn to_markdown_omits_findings_section_when_there_are_no_gaps() {
+        let result = sample_result(vec![]);
+
+        let md = to_markdown(&result);
+
+        assert!(!md.contains("## Findings"));
+    }
+
+    #[test]
+    fn to_markdown_leaderboard_caps_at_ten_entries() {
+        let mut result = sample_result(vec![]);
+        result.scores = (0..15)
+            .map(|i| PrivilegeScore {
+                user_id: format!("u{i}"),
+                user_principal_name: format!("user{i}@contoso.com"),
+                score: i,
+                flags: vec![],
+            })
+            .collect();
+
+        let md = to_markdown(&result);
+
+        assert_eq!(md.matches("user").count(), 10);
+    }
+
+    #[test]
+    fn to_sarif_stub_always_emits_an_empty_results_array() {
+        // Documents current (stub) behavior: rules are populated from gaps,
+        // but `results` is always empty regardless of how many gaps exist.
+        // Upgrading this to a real, populated SARIF file is planned as part
+        // of the CI/CD gating Enterprise feature milestone, not here.
+        let result = sample_result(vec![sample_gap()]);
+
+        let sarif = to_sarif_stub(&result);
+        let value: serde_json::Value = serde_json::from_str(&sarif).unwrap();
+
+        assert_eq!(value["version"], "2.1.0");
+        let rules = value["runs"][0]["tool"]["driver"]["rules"].as_array().unwrap();
+        assert_eq!(rules.len(), 1);
+        let results = value["runs"][0]["results"].as_array().unwrap();
+        assert!(results.is_empty());
+    }
+}

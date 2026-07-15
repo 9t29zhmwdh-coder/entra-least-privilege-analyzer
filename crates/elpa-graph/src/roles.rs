@@ -74,3 +74,108 @@ pub async fn list_role_assignments(client: &GraphClient) -> Result<Vec<RoleAssig
 
     Ok(assignments)
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::client::GraphClient;
+    use wiremock::matchers::{method, path_regex};
+    use wiremock::{Mock, MockServer, ResponseTemplate};
+
+    #[tokio::test]
+    async fn maps_and_filters_role_assignments_to_users_only() {
+        let server = MockServer::start().await;
+        Mock::given(method("GET"))
+            .and(path_regex(r"^/roleManagement/directory/roleAssignments"))
+            .respond_with(ResponseTemplate::new(200).set_body_json(serde_json::json!({
+                "value": [
+                    {
+                        "id": "assignment-1",
+                        "roleDefinitionId": "role-1",
+                        "principalId": "user-1",
+                        "principal": {
+                            "id": "user-1",
+                            "userPrincipalName": "alice@contoso.com",
+                            "@odata.type": "#microsoft.graph.user"
+                        },
+                        "roleDefinition": { "id": "role-1", "displayName": "Global Administrator", "isBuiltIn": true }
+                    },
+                    {
+                        "id": "assignment-2",
+                        "roleDefinitionId": "role-2",
+                        "principalId": "sp-1",
+                        "principal": {
+                            "id": "sp-1",
+                            "userPrincipalName": null,
+                            "@odata.type": "#microsoft.graph.servicePrincipal"
+                        },
+                        "roleDefinition": { "id": "role-2", "displayName": "Application Administrator", "isBuiltIn": true }
+                    }
+                ]
+            })))
+            .mount(&server)
+            .await;
+
+        let client = GraphClient::from_token("tenant", "t").with_graph_base(server.uri());
+        let assignments = list_role_assignments(&client).await.unwrap();
+
+        // The service principal assignment must be filtered out; only user
+        // principals are in scope for this tool.
+        assert_eq!(assignments.len(), 1);
+        assert_eq!(assignments[0].user_id, "user-1");
+        assert_eq!(assignments[0].user_principal_name, "alice@contoso.com");
+        assert_eq!(assignments[0].role_name, "Global Administrator");
+        assert_eq!(assignments[0].assignment_type, AssignmentType::Direct);
+        assert!(assignments[0].is_permanent);
+    }
+
+    #[tokio::test]
+    async fn falls_back_to_role_definition_id_when_display_name_is_missing() {
+        let server = MockServer::start().await;
+        Mock::given(method("GET"))
+            .and(path_regex(r"^/roleManagement/directory/roleAssignments"))
+            .respond_with(ResponseTemplate::new(200).set_body_json(serde_json::json!({
+                "value": [{
+                    "id": "assignment-1",
+                    "roleDefinitionId": "role-1",
+                    "principalId": "user-1",
+                    "principal": {
+                        "id": "user-1",
+                        "userPrincipalName": "alice@contoso.com",
+                        "@odata.type": "#microsoft.graph.user"
+                    },
+                    "roleDefinition": null
+                }]
+            })))
+            .mount(&server)
+            .await;
+
+        let client = GraphClient::from_token("tenant", "t").with_graph_base(server.uri());
+        let assignments = list_role_assignments(&client).await.unwrap();
+
+        assert_eq!(assignments[0].role_name, "role-1");
+    }
+
+    #[tokio::test]
+    async fn assignment_without_a_principal_is_skipped() {
+        let server = MockServer::start().await;
+        Mock::given(method("GET"))
+            .and(path_regex(r"^/roleManagement/directory/roleAssignments"))
+            .respond_with(ResponseTemplate::new(200).set_body_json(serde_json::json!({
+                "value": [{
+                    "id": "assignment-1",
+                    "roleDefinitionId": "role-1",
+                    "principalId": null,
+                    "principal": null,
+                    "roleDefinition": null
+                }]
+            })))
+            .mount(&server)
+            .await;
+
+        let client = GraphClient::from_token("tenant", "t").with_graph_base(server.uri());
+        let assignments = list_role_assignments(&client).await.unwrap();
+
+        assert!(assignments.is_empty());
+    }
+}
