@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.3.1] - 2026-07-17
+
+### Changed
+- CI: added an explicit `permissions: contents: read` block to the workflow(s) that were missing one (CodeQL `actions/missing-workflow-permissions`), narrowing the default GITHUB_TOKEN scope.
+
 ## [0.3.0] - 2026-07-15
 
 ### Added
