@@ -285,7 +285,7 @@ checksum = "1aaf95b3e5c8f23aa320147307562d361db0ae0d51242340f558153b4eb2439b"
 
 [[package]]
 name = "elpa-cli"
-version = "0.3.0"
+version = "1.0.0"
 dependencies = [
  "anyhow",
  "assert_cmd",
@@ -303,7 +303,7 @@ dependencies = [
 
 [[package]]
 name = "elpa-core"
-version = "0.3.0"
+version = "1.0.0"
 dependencies = [
  "anyhow",
  "chrono",
@@ -315,7 +315,7 @@ dependencies = [
 
 [[package]]
 name = "elpa-graph"
-version = "0.3.0"
+version = "1.0.0"
 dependencies = [
  "anyhow",
  "chrono",
