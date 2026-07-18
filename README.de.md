@@ -4,7 +4,7 @@
   <h1>Entra Least-Privilege Analyzer</h1>
 </div>
 
-🇬🇧 [English Version](README.md)
+[🇬🇧 English Version](README.md)
 
 **Read-only Rust CLI zur Analyse von Entra ID Berechtigungskonfigurationen, Erkennung überprivilegierter Accounts, Rollen-Overlap und PIM-Lücken.**
 
