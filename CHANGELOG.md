@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.4] - 2026-07-29
+
+### Changed
+
+Dependency and workflow updates merged since 1.0.3:
+
+- chore(ci): bump the actions group across 1 directory with 2 updates
+- chore(deps): bump the cargo group across 1 directory with 7 updates
+
+---
+
 ## [1.0.3] - 2026-07-29
 
 ### Changed
