@@ -6,9 +6,31 @@
 
 [🇩🇪 Deutsche Version](README.de.md)
 
-**Read-only Rust CLI for analyzing Entra ID privilege configurations, detecting over-privileged accounts, role overlap and PIM gaps.**
+**Finds the accounts in your tenant that hold more than they need, ranked by how much damage they could do.**
 
-Entra Least-Privilege Analyzer connects to Microsoft Graph API using application credentials and produces a structured privilege report. Entirely read-only, no data leaves your machine.
+Nobody grants Global Administrator on purpose and forgets. It happens one
+exception at a time, over years, until the tenant has standing permanent
+admins nobody can name and roles that overlap so heavily the assignments no
+longer mean anything. The portal will show you every assignment; it will not
+tell you which one is the problem.
+
+```
+elpa demo                  synthetic tenant, no credentials needed
+elpa analyze               your tenant, ranked by privilege score
+elpa pim                   just the PIM gaps
+elpa export --format md    for the ticket or the audit
+```
+
+Read-only throughout: application credentials against Microsoft Graph, no
+write permission, and nothing sent anywhere. Aligned with the [Microsoft Cloud
+Security Benchmark
+(MCSB)](https://learn.microsoft.com/en-us/security/benchmark/azure/overview)
+identity controls and Microsoft Secure Score.
+
+**Not for you if** you want the permissions revoked for you. This reports and
+ranks; the removing is yours, deliberately, because an automated de-privileging
+pass across a live tenant is how you lock out the people who were supposed to
+keep working.
 
 Built for Zero Trust environments. Aligned with the [Microsoft Cloud Security Benchmark (MCSB)](https://learn.microsoft.com/en-us/security/benchmark/azure/overview) identity controls and Microsoft Secure Score recommendations.
 

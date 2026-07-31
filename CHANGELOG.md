@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.6] - 2026-07-31
+
+### Changed
+
+- Both READMEs now open with how over-privilege actually accumulates, one exception at a time until nobody can name the standing admins, rather than with the tool's category. The four commands follow directly, and a short paragraph explains why the removing is deliberately left to a human: an automated de-privileging pass across a live tenant locks out people who were supposed to keep working.
+
+---
+
 ## [1.0.5] - 2026-07-29
 
 ### Security

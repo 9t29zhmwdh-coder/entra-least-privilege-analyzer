@@ -6,9 +6,31 @@
 
 [🇬🇧 English Version](README.md)
 
-**Read-only Rust CLI zur Analyse von Entra ID Berechtigungskonfigurationen, Erkennung überprivilegierter Accounts, Rollen-Overlap und PIM-Lücken.**
+**Findet die Accounts in deinem Tenant, die mehr haben als sie brauchen, sortiert nach dem möglichen Schaden.**
 
-Der Entra Least-Privilege Analyzer verbindet sich per Anwendungsberechtigungen mit der Microsoft Graph API und erstellt einen strukturierten Berechtigungsbericht. Vollständig read-only, keine Daten verlassen das lokale Gerät.
+Niemand vergibt Global Administrator absichtlich und vergisst es. Das passiert
+Ausnahme für Ausnahme über Jahre, bis im Tenant dauerhafte Admins sitzen, die
+niemand mehr benennen kann, und sich Rollen so stark überlappen, dass die
+Zuweisungen nichts mehr aussagen. Das Portal zeigt dir jede Zuweisung; welche
+davon das Problem ist, sagt es dir nicht.
+
+```
+elpa demo                  synthetischer Tenant, ohne Zugangsdaten
+elpa analyze               dein Tenant, sortiert nach Privilege Score
+elpa pim                   nur die PIM-Lücken
+elpa export --format md    fürs Ticket oder das Audit
+```
+
+Durchgehend read-only: Anwendungsberechtigungen gegen Microsoft Graph, keine
+Schreibrechte, und nichts wird irgendwohin geschickt. Ausgerichtet an den
+Identity-Controls des [Microsoft Cloud Security Benchmark
+(MCSB)](https://learn.microsoft.com/de-de/security/benchmark/azure/overview)
+und am Microsoft Secure Score.
+
+**Nichts für dich, wenn** die Berechtigungen automatisch entzogen werden
+sollen. Das hier berichtet und sortiert; das Wegnehmen bleibt bewusst bei dir,
+denn ein automatischer Entzugslauf über einen laufenden Tenant ist genau der
+Weg, wie man die Leute aussperrt, die eigentlich weiterarbeiten sollten.
 
 Konzipiert für Zero-Trust-Umgebungen. Ausgerichtet an den Identity-Controls des [Microsoft Cloud Security Benchmark (MCSB)](https://learn.microsoft.com/de-de/security/benchmark/azure/overview) und den Microsoft Secure Score Empfehlungen.
 
