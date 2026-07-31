@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.7] - 2026-07-31
+
+### Fixed
+
+- The supported-versions table in `SECURITY.md` still listed `0.1.x`, a release line that no longer exists. Somebody reporting a vulnerability reads that table first, and it told them the current release was out of scope. It lists `1.0.x`.
+
+---
+
 ## [1.0.6] - 2026-07-31
 
 ### Changed
