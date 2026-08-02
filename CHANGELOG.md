@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.9] - 2026-08-02
+
+### Changed
+
+- `thiserror` 1.0.69 to 2.0.18, merged since 1.0.8 and carried by this version.
+
+---
+
 ## [1.0.8] - 2026-07-31
 
 ### Fixed
