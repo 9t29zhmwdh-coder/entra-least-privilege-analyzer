@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.0.10] - 2026-08-03
+
+### Changed
+
+- `tabled` 0.15 to 0.21. The derive attributes and `Table::new` are unchanged across the jump, and the output is identical.
+
+### Added
+
+- Two tests that hold the exact rendered table for both table types. The output of this tool is a table, so a bump that shifts a border character or a column width is visible to every user and to no compiler. They were written and made to pass under 0.15 first, then run unchanged under 0.21. On top of that, the full output of `elpa demo`, which renders all three tables from synthetic data, is byte for byte identical before and after.
+
+---
+
 ## [1.0.9] - 2026-08-02
 
 ### Changed
