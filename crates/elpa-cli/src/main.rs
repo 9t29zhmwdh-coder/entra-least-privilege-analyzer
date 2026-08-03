@@ -269,3 +269,50 @@ fn truncate(s: &str, max: usize) -> String {
         format!("{}...", &s[..max.saturating_sub(3)])
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// Haelt die gerenderte Tabelle fest, damit ein Versionssprung von `tabled`
+    /// das Ausgabeformat nicht unbemerkt verschiebt. Die Tabelle ist das, was
+    /// der Nutzer von diesem Werkzeug zu sehen bekommt; ein Compiler bemerkt
+    /// eine veraenderte Spaltenbreite nie.
+    #[test]
+    fn score_tabelle_bleibt_im_format() {
+        let zeilen = vec![ScoreRow {
+            account: "svc-backup".into(),
+            score: 87,
+            flags: "GlobalAdmin,NoMFA".into(),
+        }];
+
+        let erwartet = concat!(
+            "+------------+-------+-------------------+\n",
+            "| Account    | Score | Flags             |\n",
+            "+------------+-------+-------------------+\n",
+            "| svc-backup | 87    | GlobalAdmin,NoMFA |\n",
+            "+------------+-------+-------------------+",
+        );
+
+        assert_eq!(Table::new(zeilen).to_string(), erwartet);
+    }
+
+    #[test]
+    fn gap_tabelle_bleibt_im_format() {
+        let zeilen = vec![GapRow {
+            severity: "High".into(),
+            title: "Standing global admin".into(),
+            affected: 4,
+        }];
+
+        let erwartet = concat!(
+            "+----------+-----------------------+----------+\n",
+            "| Severity | Title                 | Affected |\n",
+            "+----------+-----------------------+----------+\n",
+            "| High     | Standing global admin | 4        |\n",
+            "+----------+-----------------------+----------+",
+        );
+
+        assert_eq!(Table::new(zeilen).to_string(), erwartet);
+    }
+}
