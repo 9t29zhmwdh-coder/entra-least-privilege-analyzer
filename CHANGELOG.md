@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.11] - 2026-08-04
+
+### Fixed
+
+- The release workflow no longer fails when the release for a tag already exists. It called `gh release create` unconditionally and aborted with `a release with the same tag name already exists` whenever the release had come about some other way. The build had succeeded by then; only the step after it went red. In repositories that attach binaries the release was left with nothing to download, which is the same failure wearing a friendlier face.
+
+---
+
 ## [1.0.10] - 2026-08-03
 
 ### Changed
