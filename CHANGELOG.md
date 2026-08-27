@@ -2,6 +2,12 @@
 
 ## [1.0.12] - 2026-08-27
 
+### Added
+
+- **`cargo audit` in der CI.** Dieses Repo pruefte seine Abhaengigkeiten bisher als einziges der Entra-Familie nicht, waehrend die drei zugehoerigen Enterprise-Repos den Job laengst fahren. Aufgefallen ist das, weil die unten stehende Advisory hier von keiner Pipeline gemeldet wurde, sondern erst bei einem Abgleich aller Lockfiles im Konto auftauchte.
+
+  Fuer ein Werkzeug, das Berechtigungen in Entra ID analysiert, ist eine fehlende Abhaengigkeitspruefung ein schlechtes Signal, unabhaengig davon, wie gefaehrlich der einzelne Fund gerade ist.
+
 ### Security
 
 - `h2` 0.4.15 auf 0.4.19, schliesst RUSTSEC-2026-0258, unbegrenzte leere DATA-Frames. Ein Gegenueber kann leere DATA-Frames ohne Begrenzung senden; die Verbindung nimmt sie entgegen, ohne dass Nutzlast entsteht. Die Meldung erschien am 2026-08-17.
