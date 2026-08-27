@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.0.12] - 2026-08-27
+
+### Security
+
+- `h2` 0.4.15 auf 0.4.19, schliesst RUSTSEC-2026-0258, unbegrenzte leere DATA-Frames. Ein Gegenueber kann leere DATA-Frames ohne Begrenzung senden; die Verbindung nimmt sie entgegen, ohne dass Nutzlast entsteht. Die Meldung erschien am 2026-08-17.
+
+- `h2` kommt transitiv ueber `reqwest` und `hyper` herein, wird hier also nicht direkt verwendet. Gehoben wurde mit `cargo update -p h2`, damit genau dieses eine Paket sich bewegt und der Rest des Lockfiles unberuehrt bleibt.
+
+---
+
 ## [1.0.11] - 2026-08-04
 
 ### Fixed
