@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.0.14] - 2026-09-27
+
+### Changed
+
+Dependency and CI updates merged since v1.0.13, each with green checks:
+
+- chore(ci): bump the actions group across 1 directory with 5 updates (#50)
+- chore(deps): bump the cargo group across 1 directory with 2 updates (#51)
+- chore(deps): bump tabled from 0.21.0 to 0.22.0 (#52)
+
+---
+
 ## [1.0.13] - 2026-09-27
 
 ### Security
