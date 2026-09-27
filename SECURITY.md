@@ -3,17 +3,25 @@
 ## Supported Versions
 
 | Version | Supported |
-|---|---|
-| 1.0.x | Yes |
-| < 1.0 | No |
+|---------|-----------|
+| Latest  | ✅ Yes    |
+| Older   | ❌ No     |
+
+Security fixes are only applied to the latest release.
 
 ## Reporting a Vulnerability
 
-To report a security vulnerability, please open a GitHub issue with the label `security`.
+**Do NOT open a public GitHub issue for security vulnerabilities.**
 
-Do not include tenant IDs, credentials, or personal data in the report.
+Instead, report it privately via [GitHub Security Advisory](https://github.com/9t29zhmwdh-coder/entra-least-privilege-analyzer/security/advisories/new) or contact the maintainer via the GitHub profile.
 
-I will acknowledge receipt within 72 hours and aim to provide a fix or mitigation within 14 days for confirmed vulnerabilities.
+Include:
+- Description of the vulnerability
+- Steps to reproduce
+- Potential impact
+- Suggested fix (if any)
+
+A response within **48 hours** is the target, and the issue will be worked on promptly.
 
 ## Security Design Principles
 
