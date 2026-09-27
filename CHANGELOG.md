@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.0.13] - 2026-09-27
+
+### Security
+
+- `SECURITY.md` links GitHub's private advisory form in full. The link was missing or relative, so OpenSSF Scorecard found no reporting channel and scored the policy 4 of 10.
+- The supported-versions table named a version line that is no longer current; it now says that the latest release gets security fixes.
+
+### Changed
+
+Dependency updates merged since v1.0.12:
+
+- chore(deps): bump the cargo group across 1 directory with 2 updates (#49)
+
+---
+
 ## [1.0.12] - 2026-08-27
 
 ### Added
