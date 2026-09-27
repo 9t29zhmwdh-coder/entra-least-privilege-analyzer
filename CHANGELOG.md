@@ -4,6 +4,7 @@
 
 ### Security
 
+- `rustls` 0.23.41 to 0.23.45 (with `rustls-webpki` 0.103.15) for RUSTSEC-2026-0285: TLS 1.3 handshake messages were accepted across encryption level boundaries. The dependency audit failed on it.
 - `SECURITY.md` links GitHub's private advisory form in full. The link was missing or relative, so OpenSSF Scorecard found no reporting channel and scored the policy 4 of 10.
 - The supported-versions table named a version line that is no longer current; it now says that the latest release gets security fixes.
 
